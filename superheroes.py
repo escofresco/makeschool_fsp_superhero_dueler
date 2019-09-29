@@ -20,12 +20,34 @@ class Weapon(Ability):
     def attack(self):
         return randrange(self.max_damage//2, self.max_damage)
 
+class Team(object):
+    def __init__(self, name: str):
+        self.name = name
+
+        # order doesn't matter so let's use a data structure
+        # with constant del/add
+        self.members = {}
+
+    def add_hero(self, hero: Hero):
+        self.members[hero.name] = hero
+
+    def remove_hero(self, name: str):
+        if name in self.members:
+            del self.members[name]
+
+    def view_all(self):
+        for hero in self.members:
+            print(hero)
+
 class Hero(object):
     def __init__(self, name: str, starting_health=100):
         self.name = name
         self.starting_health = self.current_health = starting_health
         self.abilities = []
         self.armors = []
+
+    def __str__(self):
+        return self.name
 
     def add_ability(self, ability: Ability) -> None:
         self.abilities.append(ability)
