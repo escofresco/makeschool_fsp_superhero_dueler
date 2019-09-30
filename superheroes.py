@@ -115,4 +115,6 @@ class Team(object):
             hero.revive()
 
     def stats(self):
-        pass
+        for hero in self.heroes:
+            print(f'{hero} - deaths: {hero.deaths} kills: {hero.kills}')
+            
