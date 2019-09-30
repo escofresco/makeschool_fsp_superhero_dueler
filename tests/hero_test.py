@@ -1,6 +1,9 @@
 import pytest
 import io
+import os
 import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import superheroes
 import math
 import random
@@ -106,7 +109,7 @@ def test_hero_ability_attack_mean_value():
 
     total_attack = 0
 
-    for _ in range(iterations): 
+    for _ in range(iterations):
         attack_value = athena.attack()
         assert attack_value >= 0 and attack_value <= strength
         total_attack += attack_value
@@ -132,16 +135,16 @@ def test_hero_ability_attack_standard_deviation():
         attacks.append(cur_attack)
         total_attack += cur_attack
     mean = total_attack / number_tests
-    
+
     # Get Square Deviations
     for index, value in enumerate(attacks):
         attacks[index] = math.pow(value - mean, 2)
-    
+
     standard_dev = math.sqrt(sum(attacks) / len(attacks))
     print("Standard Deviation Cannot be 0.\nRandom Numbers not generated for attack.")
     assert standard_dev != 0.0
-      
-    
+
+
 def test_hero_weapon_equip():
     sans = superheroes.Hero("Comic Sans")
     weapon = superheroes.Weapon("Garlic Hot Sauce", 400)
@@ -150,7 +153,7 @@ def test_hero_weapon_equip():
     assert sans.abilities[0].name == "Garlic Hot Sauce"
 
 # This tests if the average of all attacks is correct.
-# This test will faile if the random range of values is not correct. 
+# This test will faile if the random range of values is not correct.
 def test_hero_weapon_attack_mean_value():
     kkrunch = superheroes.Hero("Kaptain Krunch")
     strength = random.randint(10, 30000)
@@ -164,7 +167,7 @@ def test_hero_weapon_attack_mean_value():
     sum_of_sqr = 0
     total_attack = 0
 
-    for _ in range(iterations): 
+    for _ in range(iterations):
         attack_value = kkrunch.attack()
         assert attack_value >= min_attack and attack_value <= strength
         total_attack += attack_value
@@ -177,7 +180,7 @@ def test_hero_weapon_attack_mean_value():
     print("Mean -- calculated: {} | actual: {}".format(calculated_mean, actual_mean))
     print("Acceptable Min: {} | Acceptable Max: {}".format(actual_mean - accepted_window, actual_mean + accepted_window))
     print("Tested Result: {}".format(actual_mean))
-    assert actual_mean <= calculated_mean + accepted_window 
+    assert actual_mean <= calculated_mean + accepted_window
     assert actual_mean >= calculated_mean - accepted_window
 
 # This method uses statistics to check that a random value is given.
@@ -195,11 +198,11 @@ def test_hero_attack_standard_deviation():
         attacks.append(cur_attack)
         total_attack += cur_attack
     mean = total_attack / number_tests
-    
+
     # Get Square Deviations
     for index, value in enumerate(attacks):
         attacks[index] = math.pow(value - mean, 2)
-    
+
     standard_dev = math.sqrt(sum(attacks) / len(attacks))
     print("Random values not given. Please make sure you're not returning the same value every time.")
     assert standard_dev != 0.0
