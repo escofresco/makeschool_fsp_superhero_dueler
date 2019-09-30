@@ -1,4 +1,4 @@
-from random import randrange, shuffle
+from random import choice, randrange, shuffle
 
 class Ability(object):
     def __init__(self, name: str, max_damage: int):
@@ -74,6 +74,9 @@ class Hero(object):
         player2.deaths += player2.is_alive() ^ 1
         print(f"{(player1.name if player1.is_alive() else player2.name)} won")
 
+    def revive(self):
+        self.current_health = self.starting_health
+
 class Team(object):
     def __init__(self, name: str):
         self.name = name
@@ -101,7 +104,11 @@ class Team(object):
             print(hero)
 
     def attack(self, other_team: 'Team'):
-        pass
+        if not len(self.heroes):
+            raise Exception('Our team has no heroes :{')
+        if not len(other_team.heroes):
+            raise Exception('Other team has no heroes ;{')
+        choice(self.heroes).fight(choice(other_team.heroes))
 
     def revive_heroes(self, health=100):
         pass
