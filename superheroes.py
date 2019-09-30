@@ -111,7 +111,8 @@ class Team(object):
         choice(self.heroes).fight(choice(other_team.heroes))
 
     def revive_heroes(self, health=100):
-        pass
+        for hero in self.heroes:
+            hero.revive()
 
     def stats(self):
         pass
