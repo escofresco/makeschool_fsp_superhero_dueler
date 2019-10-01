@@ -2,7 +2,7 @@ import pytest
 import io
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 
 import superheroes
 import math
@@ -18,6 +18,7 @@ def capture_console_output(function_body):
     function_body()
     sys.stdout = sys.__stdout__
     return string_io.getvalue()
+
 
 # Test Abilities Class
 
@@ -41,6 +42,7 @@ def test_ability_attack():
     for _ in range(0, test_runs):
         attack = big_strength.attack()
         assert attack >= 0 and attack <= 400
+
 
 # Test Weapons Class
 
@@ -118,9 +120,21 @@ def test_hero_ability_attack_mean_value():
     print("Max Allowed Damage: {}".format(strength))
     print("Attacks Tested: {}".format(iterations))
     print("Mean -- calculated: {} | actual: {}".format(calculated_mean, actual_mean))
-    print("Acceptable Distance from Mean: {} | Average distance from mean: {}".format(accepted_window, abs(calculated_mean - actual_mean)))
-    print("Acceptable min attack: {} | Acceptable max attack: {}".format(actual_mean - accepted_window, actual_mean + accepted_window))
-    assert actual_mean <= calculated_mean + accepted_window and actual_mean >= calculated_mean - accepted_window
+    print(
+        "Acceptable Distance from Mean: {} | Average distance from mean: {}".format(
+            accepted_window, abs(calculated_mean - actual_mean)
+        )
+    )
+    print(
+        "Acceptable min attack: {} | Acceptable max attack: {}".format(
+            actual_mean - accepted_window, actual_mean + accepted_window
+        )
+    )
+    assert (
+        actual_mean <= calculated_mean + accepted_window
+        and actual_mean >= calculated_mean - accepted_window
+    )
+
 
 def test_hero_ability_attack_standard_deviation():
     willow_waffle = superheroes.Hero("Willow Waffle")
@@ -152,6 +166,7 @@ def test_hero_weapon_equip():
     assert len(sans.abilities) == 1
     assert sans.abilities[0].name == "Garlic Hot Sauce"
 
+
 # This tests if the average of all attacks is correct.
 # This test will faile if the random range of values is not correct.
 def test_hero_weapon_attack_mean_value():
@@ -178,10 +193,15 @@ def test_hero_weapon_attack_mean_value():
     print("Max Allowed Damage: {}".format(strength))
     print("Attacks Tested: {}".format(iterations))
     print("Mean -- calculated: {} | actual: {}".format(calculated_mean, actual_mean))
-    print("Acceptable Min: {} | Acceptable Max: {}".format(actual_mean - accepted_window, actual_mean + accepted_window))
+    print(
+        "Acceptable Min: {} | Acceptable Max: {}".format(
+            actual_mean - accepted_window, actual_mean + accepted_window
+        )
+    )
     print("Tested Result: {}".format(actual_mean))
     assert actual_mean <= calculated_mean + accepted_window
     assert actual_mean >= calculated_mean - accepted_window
+
 
 # This method uses statistics to check that a random value is given.
 # This test will only fail if the same value is returned over the course of 1000 runs.
@@ -204,8 +224,11 @@ def test_hero_attack_standard_deviation():
         attacks[index] = math.pow(value - mean, 2)
 
     standard_dev = math.sqrt(sum(attacks) / len(attacks))
-    print("Random values not given. Please make sure you're not returning the same value every time.")
+    print(
+        "Random values not given. Please make sure you're not returning the same value every time."
+    )
     assert standard_dev != 0.0
+
 
 def test_hero_attack_weapon():
     big_strength = superheroes.Ability("Overwhelming Strength", 200)
@@ -246,6 +269,7 @@ def attack_avg(object, low, high):
     for _ in range(0, test_runs):
         attack = object.attack()
         assert attack <= high and attack >= low
+
 
 # Test Teams
 
